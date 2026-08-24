@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common_widgets/cards/info_banner.dart';
 import '../../../common_widgets/inputs/app_text_field.dart';
+import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controller/home_controller.dart';
+import '../../../common_widgets/cards/service_category_card.dart';
 import '../widgets/current_booking_card.dart';
-import '../widgets/service_category_card.dart';
-import '../widgets/verified_banner.dart';
 
 class HomeTabView extends GetView<HomeController> {
   const HomeTabView({super.key});
@@ -15,7 +16,7 @@ class HomeTabView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final colors = context.appColors;
-    final categories = controller.categories(colors);
+    final categories = controller.featuredCategories(colors);
 
     return SafeArea(
       bottom: false,
@@ -36,6 +37,8 @@ class HomeTabView extends GetView<HomeController> {
           AppTextField(
             controller: controller.searchController,
             hint: 'How can we help today?',
+            readOnly: true,
+            onTap: () => Get.toNamed(AppRoutes.jobCategory),
             prefixIcon: Icon(Icons.search_rounded, color: scheme.onSurfaceVariant),
           ),
           const SizedBox(height: 20),
@@ -49,15 +52,25 @@ class HomeTabView extends GetView<HomeController> {
               crossAxisSpacing: 12,
               childAspectRatio: 1.05,
             ),
-            itemBuilder: (context, index) => ServiceCategoryCard(category: categories[index]),
+            itemBuilder: (context, index) => ServiceCategoryCard(
+              category: categories[index],
+              onTap: () => Get.toNamed(AppRoutes.jobCategory, arguments: categories[index]),
+            ),
           ),
           const SizedBox(height: 20),
-          const VerifiedBanner(),
+          const InfoBanner(
+            title: 'Verified local professionals',
+            message: 'Background checked, insured and rated by customers like you.',
+            variant: InfoBannerVariant.success,
+          ),
           if (controller.currentBooking != null) ...[
             const SizedBox(height: 20),
             Text('Your current booking', style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 10),
-            CurrentBookingCard(booking: controller.currentBooking!),
+            CurrentBookingCard(
+              booking: controller.currentBooking!,
+              onTap: () => Get.toNamed(AppRoutes.technicianTracking),
+            ),
           ],
         ],
       ),

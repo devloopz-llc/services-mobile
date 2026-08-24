@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Reusable text field with an optional label, helper/error text, and
 /// leading/trailing icons — themed consistently everywhere it's used
@@ -22,6 +23,8 @@ class AppTextField extends StatelessWidget {
     this.enabled = true,
     this.autofocus = false,
     this.maxLines = 1,
+    this.maxLength,
+    this.inputFormatters,
   });
 
   final TextEditingController? controller;
@@ -40,6 +43,8 @@ class AppTextField extends StatelessWidget {
   final bool enabled;
   final bool autofocus;
   final int maxLines;
+  final int? maxLength;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +67,8 @@ class AppTextField extends StatelessWidget {
           enabled: enabled,
           autofocus: autofocus,
           maxLines: maxLines,
+          maxLength: maxLength,
+          inputFormatters: inputFormatters,
           decoration: InputDecoration(
             hintText: hint,
             errorText: errorText,

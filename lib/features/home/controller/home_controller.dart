@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common_models/service_category.dart';
 import '../../../core/theme/app_colors.dart';
 import '../model/booking_summary.dart';
-import '../model/service_category.dart';
 
 class HomeController extends GetxController {
   final RxInt selectedTabIndex = 0.obs;
@@ -16,32 +16,10 @@ class HomeController extends GetxController {
     technicianName: 'Amir K.',
   );
 
-  List<ServiceCategory> categories(AppColors colors) => [
-        ServiceCategory(
-          title: 'Plumbing',
-          subtitle: 'Leaks, repairs & installations',
-          icon: Icons.plumbing_rounded,
-          color: colors.categoryBlue,
-        ),
-        ServiceCategory(
-          title: 'Electrical',
-          subtitle: 'Faults, sockets & lighting',
-          icon: Icons.bolt_rounded,
-          color: colors.categoryAmber,
-        ),
-        ServiceCategory(
-          title: 'Heating',
-          subtitle: 'Boilers, radiators & servicing',
-          icon: Icons.thermostat_rounded,
-          color: colors.categoryGreen,
-        ),
-        ServiceCategory(
-          title: 'Handyman',
-          subtitle: 'Repairs, fixes & assembly',
-          icon: Icons.handyman_rounded,
-          color: colors.categoryGrey,
-        ),
-      ];
+  /// Home only surfaces the most-requested trades; the job-report wizard
+  /// shows the full list (see [ServiceCategory.defaults]).
+  List<ServiceCategory> featuredCategories(AppColors colors) =>
+      ServiceCategory.defaults(colors).take(4).toList();
 
   void changeTab(int index) => selectedTabIndex.value = index;
 

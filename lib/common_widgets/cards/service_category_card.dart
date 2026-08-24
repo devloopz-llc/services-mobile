@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/service_category.dart';
+import '../../common_models/service_category.dart';
 
 class ServiceCategoryCard extends StatelessWidget {
   const ServiceCategoryCard({super.key, required this.category, this.onTap});

@@ -9,14 +9,17 @@ environment:
 dependencies:
   cached_network_image: ^3.4.1
   connectivity_plus: ^7.3.1
+  cupertino_icons: ^1.0.9
   dio: ^5.11.0
   flutter:
     sdk: flutter
   flutter_svg: ^2.3.0
   get: ^4.7.3
   google_fonts: ^8.2.1
+  image_picker: ^1.2.3
   intl: ^0.20.3
   pretty_dio_logger: ^1.4.0
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

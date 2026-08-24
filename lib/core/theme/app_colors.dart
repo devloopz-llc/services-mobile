@@ -18,7 +18,13 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.warningContainer,
     required this.onWarningContainer,
     required this.info,
+    required this.onInfo,
     required this.infoContainer,
+    required this.onInfoContainer,
+    required this.live,
+    required this.onLive,
+    required this.liveContainer,
+    required this.onLiveContainer,
     required this.categoryBlue,
     required this.categoryAmber,
     required this.categoryGreen,
@@ -38,7 +44,17 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color onWarningContainer;
 
   final Color info;
+  final Color onInfo;
   final Color infoContainer;
+  final Color onInfoContainer;
+
+  /// `live` is deliberately a brighter blue than `info` — reserved for the
+  /// backend's `live` status group (en_route / in_progress), so it reads as
+  /// "happening now" rather than merely "in progress along the pipeline".
+  final Color live;
+  final Color onLive;
+  final Color liveContainer;
+  final Color onLiveContainer;
 
   // Service category accent colors (plumbing, electrical, heating, handyman).
   final Color categoryBlue;
@@ -59,7 +75,13 @@ class AppColors extends ThemeExtension<AppColors> {
     warningContainer: Color(0xFFFEF3C7),
     onWarningContainer: Color(0xFF92400E),
     info: Color(0xFF2563EB),
+    onInfo: Color(0xFFFFFFFF),
     infoContainer: Color(0xFFDBEAFE),
+    onInfoContainer: Color(0xFF1E3A8A),
+    live: Color(0xFF0EA5E9),
+    onLive: Color(0xFFFFFFFF),
+    liveContainer: Color(0xFFE0F2FE),
+    onLiveContainer: Color(0xFF075985),
     categoryBlue: Color(0xFF2E7BE0),
     categoryAmber: Color(0xFFE0A72E),
     categoryGreen: Color(0xFF2F8F5B),
@@ -78,7 +100,13 @@ class AppColors extends ThemeExtension<AppColors> {
     warningContainer: Color(0xFF78350F),
     onWarningContainer: Color(0xFFFDE68A),
     info: Color(0xFF60A5FA),
+    onInfo: Color(0xFF07204A),
     infoContainer: Color(0xFF1E3A8A),
+    onInfoContainer: Color(0xFFBFDBFE),
+    live: Color(0xFF38BDF8),
+    onLive: Color(0xFF042F3D),
+    liveContainer: Color(0xFF0C4A6E),
+    onLiveContainer: Color(0xFFBAE6FD),
     categoryBlue: Color(0xFF5B9BF2),
     categoryAmber: Color(0xFFEBC15C),
     categoryGreen: Color(0xFF34D399),
@@ -98,7 +126,13 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? warningContainer,
     Color? onWarningContainer,
     Color? info,
+    Color? onInfo,
     Color? infoContainer,
+    Color? onInfoContainer,
+    Color? live,
+    Color? onLive,
+    Color? liveContainer,
+    Color? onLiveContainer,
     Color? categoryBlue,
     Color? categoryAmber,
     Color? categoryGreen,
@@ -116,7 +150,13 @@ class AppColors extends ThemeExtension<AppColors> {
       warningContainer: warningContainer ?? this.warningContainer,
       onWarningContainer: onWarningContainer ?? this.onWarningContainer,
       info: info ?? this.info,
+      onInfo: onInfo ?? this.onInfo,
       infoContainer: infoContainer ?? this.infoContainer,
+      onInfoContainer: onInfoContainer ?? this.onInfoContainer,
+      live: live ?? this.live,
+      onLive: onLive ?? this.onLive,
+      liveContainer: liveContainer ?? this.liveContainer,
+      onLiveContainer: onLiveContainer ?? this.onLiveContainer,
       categoryBlue: categoryBlue ?? this.categoryBlue,
       categoryAmber: categoryAmber ?? this.categoryAmber,
       categoryGreen: categoryGreen ?? this.categoryGreen,
@@ -139,7 +179,13 @@ class AppColors extends ThemeExtension<AppColors> {
       warningContainer: Color.lerp(warningContainer, other.warningContainer, t)!,
       onWarningContainer: Color.lerp(onWarningContainer, other.onWarningContainer, t)!,
       info: Color.lerp(info, other.info, t)!,
+      onInfo: Color.lerp(onInfo, other.onInfo, t)!,
       infoContainer: Color.lerp(infoContainer, other.infoContainer, t)!,
+      onInfoContainer: Color.lerp(onInfoContainer, other.onInfoContainer, t)!,
+      live: Color.lerp(live, other.live, t)!,
+      onLive: Color.lerp(onLive, other.onLive, t)!,
+      liveContainer: Color.lerp(liveContainer, other.liveContainer, t)!,
+      onLiveContainer: Color.lerp(onLiveContainer, other.onLiveContainer, t)!,
       categoryBlue: Color.lerp(categoryBlue, other.categoryBlue, t)!,
       categoryAmber: Color.lerp(categoryAmber, other.categoryAmber, t)!,
       categoryGreen: Color.lerp(categoryGreen, other.categoryGreen, t)!,
