@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../../../common_widgets/app_bar/app_bar_widget.dart';
 import '../../../common_widgets/badges/status_badge.dart';
 import '../../../common_widgets/cards/technician_card.dart';
 import '../../../common_widgets/misc/icon_text_row.dart';
 import '../../../common_widgets/misc/vertical_timeline_stepper.dart';
+import '../../../core/utils/app_date_formatter.dart';
 import '../model/job_booking_summary.dart';
 
 class BookingDetailScreen extends StatelessWidget {
@@ -14,10 +14,57 @@ class BookingDetailScreen extends StatelessWidget {
 
   String _formatWhen(JobBookingSummary summary) {
     if (summary.isAsap || summary.slotStart == null) return 'As soon as possible';
-    final date = DateFormat('EEE, d MMM').format(summary.slotStart!);
-    final start = DateFormat('h:mm a').format(summary.slotStart!);
-    final end = summary.slotEnd != null ? DateFormat('h:mm a').format(summary.slotEnd!) : null;
+    final date = AppDateFormatter.weekdayDate(summary.slotStart!);
+    final start = AppDateFormatter.time(summary.slotStart!);
+    final end = summary.slotEnd != null ? AppDateFormatter.time(summary.slotEnd!) : null;
     return end != null ? '$date, $start – $end' : '$date, $start';
+  }
+
+  /// The real API only ever returns completed/current timeline steps (see
+  /// job-lifecycle.md) — the two steps after "Technician assigned" are
+  /// client-side placeholders for what hasn't happened yet, so their state
+  /// has to be derived from the booking's current status group rather than
+  /// hardcoded, or a completed/past booking would show them as still
+  /// pending.
+  List<TimelineStep> _buildTimeline(JobBookingSummary summary) {
+    final name = summary.technicianName;
+    const received = TimelineStep(
+      title: 'Received',
+      subtitle: 'Your request has been received.',
+      state: TimelineStepState.completed,
+    );
+    final findingProfessional = TimelineStep(
+      title: 'Finding a professional',
+      subtitle: 'Matched you with $name',
+      state: TimelineStepState.completed,
+    );
+
+    switch (summary.statusGroup) {
+      case AppStatusGroup.confirmed:
+        return [
+          received,
+          findingProfessional,
+          TimelineStep(title: 'Technician assigned', subtitle: '$name was assigned to your job.', state: TimelineStepState.completed),
+          TimelineStep(title: 'On the way', subtitle: '$name travelled to the property.', state: TimelineStepState.completed),
+          const TimelineStep(title: 'Job completed', subtitle: "Work finished — you're all set.", state: TimelineStepState.completed),
+        ];
+      case AppStatusGroup.live:
+        return [
+          received,
+          findingProfessional,
+          TimelineStep(title: 'Technician assigned', subtitle: '$name is assigned to your job.', state: TimelineStepState.completed),
+          TimelineStep(title: 'On the way', subtitle: "We'll let you know when $name is on the way.", state: TimelineStepState.current),
+          const TimelineStep(title: 'Job completed', subtitle: "You'll be able to review and pay.", state: TimelineStepState.upcoming),
+        ];
+      default:
+        return [
+          received,
+          findingProfessional,
+          TimelineStep(title: 'Technician assigned', subtitle: '$name is assigned to your job.', state: TimelineStepState.current),
+          const TimelineStep(title: 'On the way', subtitle: "We'll let you know when your technician is on the way.", state: TimelineStepState.upcoming),
+          const TimelineStep(title: 'Job completed', subtitle: "You'll be able to review and pay.", state: TimelineStepState.upcoming),
+        ];
+    }
   }
 
   @override
@@ -32,11 +79,11 @@ class BookingDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StatusBadge(label: 'Technician assigned', group: AppStatusGroup.activePipeline),
+              StatusBadge(label: summary.statusLabel, group: summary.statusGroup),
               const SizedBox(height: 16),
               TechnicianCard(
-                name: 'Amir K.',
-                role: '${summary.categoryTitle} specialist',
+                name: summary.technicianName,
+                role: summary.technicianRole ?? '${summary.categoryTitle} specialist',
                 rating: 4.9,
                 reviewCount: 128,
               ),
@@ -55,15 +102,7 @@ class BookingDetailScreen extends StatelessWidget {
               const SizedBox(height: 24),
               Text('Progress', style: Theme.of(context).textTheme.titleSmall),
               const SizedBox(height: 16),
-              VerticalTimelineStepper(
-                steps: const [
-                  TimelineStep(title: 'Received', subtitle: 'Your request has been received.', state: TimelineStepState.completed),
-                  TimelineStep(title: "Finding a professional", subtitle: 'Matching you with a trusted technician.', state: TimelineStepState.completed),
-                  TimelineStep(title: 'Technician assigned', subtitle: 'Amir K. is assigned to your job.', state: TimelineStepState.current),
-                  TimelineStep(title: 'On the way', subtitle: "We'll let you know when Amir is on the way.", state: TimelineStepState.upcoming),
-                  TimelineStep(title: 'Job completed', subtitle: "You'll be able to review and pay.", state: TimelineStepState.upcoming),
-                ],
-              ),
+              VerticalTimelineStepper(steps: _buildTimeline(summary)),
             ],
           ),
         ),

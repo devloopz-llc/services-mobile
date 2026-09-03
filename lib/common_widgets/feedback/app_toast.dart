@@ -27,9 +27,12 @@ class AppToast {
 
   static void _show(_ToastKind kind, String message, {String? title, required IconData icon}) {
     if (message.trim().isEmpty) return;
-    final overlayContext = Get.overlayContext;
-    if (overlayContext == null) return;
-    final overlay = Overlay.of(overlayContext, rootOverlay: true);
+    // Grab the OverlayState directly (matches how GetX's own snackbar does
+    // it) rather than `Overlay.of(Get.overlayContext!)` — the context GetX
+    // hands back is inside the overlay's own element, so an ancestor
+    // search from it can fail to find a root overlay to walk up to.
+    final overlay = Get.key.currentState?.overlay;
+    if (overlay == null) return;
 
     _current?.remove();
     _current = null;

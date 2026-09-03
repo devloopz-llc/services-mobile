@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'core/constants/app_strings.dart';
+import 'core/network/auth_token_store.dart';
 import 'core/routes/app_pages.dart';
 import 'core/routes/app_routes.dart';
+import 'core/services/auth_service.dart';
 import 'core/theme/app_theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AuthTokenStore.load();
+  Get.put(AuthService(), permanent: true);
   runApp(const MainApp());
 }
 

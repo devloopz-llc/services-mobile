@@ -30,6 +30,13 @@
 	<string>Take a photo to show the technician the problem.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Attach photos of the problem to your job report.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<!-- Local dev only: allows plain HTTP to 127.0.0.1 for `php artisan serve`.
+		     Remove once the API has a real HTTPS host. -->
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

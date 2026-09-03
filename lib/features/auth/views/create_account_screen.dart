@@ -78,7 +78,7 @@ class CreateAccountScreen extends GetView<RegisterController> {
               Obx(
                 () => AppButton(
                   label: 'Create account',
-                  isLoading: controller.isSubmitting.value,
+                  isLoading: controller.isLoading.value,
                   onPressed: controller.submit,
                 ),
               ),

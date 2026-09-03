@@ -13,6 +13,7 @@ dependencies:
   dio: ^5.11.0
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^11.0.0
   flutter_svg: ^2.3.0
   get: ^4.7.3
   google_fonts: ^8.2.1

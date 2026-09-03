@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../common_widgets/feedback/coming_soon_view.dart';
 import '../controller/home_controller.dart';
+import 'account_tab_view.dart';
+import 'bookings_tab_view.dart';
 import 'home_tab_view.dart';
+import 'messages_tab_view.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
@@ -16,9 +18,9 @@ class HomeScreen extends GetView<HomeController> {
           index: controller.selectedTabIndex.value,
           children: const [
             HomeTabView(),
-            ComingSoonView(icon: Icons.event_note_rounded, title: 'Bookings'),
-            ComingSoonView(icon: Icons.chat_bubble_rounded, title: 'Messages'),
-            ComingSoonView(icon: Icons.person_rounded, title: 'Account'),
+            BookingsTabView(),
+            MessagesTabView(),
+            AccountTabView(),
           ],
         ),
       ),

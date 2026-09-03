@@ -64,7 +64,7 @@ class LoginScreen extends GetView<LoginController> {
               Obx(
                 () => AppButton(
                   label: 'Sign in',
-                  isLoading: controller.isSubmitting.value,
+                  isLoading: controller.isLoading.value,
                   onPressed: controller.submit,
                 ),
               ),

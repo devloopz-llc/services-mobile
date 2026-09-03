@@ -7,7 +7,10 @@ import '../../features/auth/views/create_account_screen.dart';
 import '../../features/auth/views/login_screen.dart';
 import '../../features/auth/views/verify_number_screen.dart';
 import '../../features/auth/views/welcome_screen.dart';
+import '../../features/home/controller/account_controller.dart';
+import '../../features/home/controller/bookings_controller.dart';
 import '../../features/home/controller/home_controller.dart';
+import '../../features/home/controller/messages_controller.dart';
 import '../../features/home/views/home_screen.dart';
 import '../../features/job_report/controller/job_report_controller.dart';
 import '../../features/job_report/views/booking_detail_screen.dart';
@@ -65,6 +68,9 @@ class AppPages {
       page: () => const HomeScreen(),
       binding: BindingsBuilder(() {
         Get.put(HomeController());
+        Get.put(BookingsController());
+        Get.put(MessagesController());
+        Get.put(AccountController());
       }),
     ),
     // Job-report wizard: only the entry step registers JobReportController —

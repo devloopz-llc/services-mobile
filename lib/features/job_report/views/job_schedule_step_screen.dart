@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../../../common_widgets/buttons/app_button.dart';
 import '../../../common_widgets/cards/address_summary_card.dart';
@@ -8,6 +7,7 @@ import '../../../common_widgets/cards/info_banner.dart';
 import '../../../common_widgets/cards/selectable_option_card.dart';
 import '../../../common_widgets/inputs/app_text_field.dart';
 import '../../../common_widgets/misc/step_progress_header.dart';
+import '../../../core/utils/app_date_formatter.dart';
 import '../controller/job_report_controller.dart';
 
 class JobScheduleStepScreen extends GetView<JobReportController> {
@@ -49,9 +49,7 @@ class JobScheduleStepScreen extends GetView<JobReportController> {
 
   String _formatSlot(DateTime? start, DateTime? end) {
     if (start == null) return 'Pick a date and time that works for you';
-    final date = DateFormat('EEE, d MMM').format(start);
-    final time = DateFormat('h:mm a').format(start);
-    return '$date, $time';
+    return '${AppDateFormatter.weekdayDate(start)}, ${AppDateFormatter.time(start)}';
   }
 
   @override

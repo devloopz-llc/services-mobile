@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../common_widgets/cards/booking_card.dart';
 import '../../../common_widgets/cards/info_banner.dart';
+import '../../../common_widgets/cards/service_category_card.dart';
 import '../../../common_widgets/inputs/app_text_field.dart';
 import '../../../core/routes/app_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../controller/home_controller.dart';
-import '../../../common_widgets/cards/service_category_card.dart';
-import '../widgets/current_booking_card.dart';
 
 class HomeTabView extends GetView<HomeController> {
   const HomeTabView({super.key});
@@ -67,9 +67,9 @@ class HomeTabView extends GetView<HomeController> {
             const SizedBox(height: 20),
             Text('Your current booking', style: Theme.of(context).textTheme.titleSmall),
             const SizedBox(height: 10),
-            CurrentBookingCard(
+            BookingCard(
               booking: controller.currentBooking!,
-              onTap: () => Get.toNamed(AppRoutes.technicianTracking),
+              onViewDetails: () => Get.toNamed(AppRoutes.technicianTracking),
             ),
           ],
         ],
